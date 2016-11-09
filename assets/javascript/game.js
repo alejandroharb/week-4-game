@@ -12,15 +12,30 @@ $(document).ready(function(){
         score counter reset
     */
 
-    var compNum;
-    var wins=0;
-    var score=0;
-    var losses=0;
-    roundReset();
+    
+    // function that will check the score each time it is changed by a click event
+    function check(score, computer){
+        if(score < computer){
+        return;
+        }
+        if (score == computer){
+            alert("win!");
+            wins ++;
+            $("#wins").text(wins);
+            roundReset();
+        }
+        if(score > computer) {
+            alert("lose!");
+            losses ++;
+            $("#losses").text(losses);
+            roundReset();
+        }
+    }
     //returns random number within range
     function randomRange(max, min) {
         return Math.floor(Math.random()*(max-min +1))+ min;
     }
+    //resets key variables for game, for new round
     function roundReset(){
         score = 0;
         compNum = randomRange(120,19);
@@ -30,33 +45,33 @@ $(document).ready(function(){
         crystal4 = randomRange(12,1);
         $("#computerNumber, #score").empty();
     }
-    function clickEvents (id, crystal){
+    //click event listener, adds crystal value to score and checks if win or lose
+    var crystalButton = function (id, crystal){
         $(id).on('click', function(){
             score += crystal;
-        });
+            $("#score").text(score);
+            check();
+        })
     }
+    var compNum;
+    var wins=0;
+    var score=0;
+    var losses=0;
+    var crystal1;
+    var crystal2;
+    var crystal3;
+    var crystal4;
+    roundReset();
+    //click event fires off crystalButton function, which 
+    crystalButton("#crystal1", crystal1);
+    crystalButton("#crystal2", crystal2);
+    crystalButton("#crystal3", crystal3);
+    crystalButton("#crystal4", crystal4);
 
-    clickEvents('#crystal1',crystal1);
-    clickEvents('#crystal2',crystal2);
-    clickEvents('#crystal3',crystal3);
-    clickEvents('#crystal4',crystal4);
-    $('#score').text(score);
-        console.log("score inside clickEvent function: "+score)
+    console.log("global score: " + score);
 
-
-    $('#computerNumber').text(compNum);
-    if(score == compNum){
-        alert("win!");
-        wins ++;
-        $("#wins").text(wins);
-        roundReset();
-    }
-    if(score > compNum){
-        alert("lose!");
-        losses ++;
-        $("#losses").text(losses);
-        roundReset();
-    }
+    
+    
     console.log("crystal 1: "+ crystal1);
     console.log("crystal 2: "+ crystal2);
     console.log("crystal 3: "+ crystal3);
@@ -64,7 +79,7 @@ $(document).ready(function(){
     console.log("global compNumb: "+ compNum)
     console.log("wins: "+wins);
     console.log("losses: "+losses);
-    console.log("global score variable: "+score);
+    
 });
 
 //need to get the global score variable from the functions
