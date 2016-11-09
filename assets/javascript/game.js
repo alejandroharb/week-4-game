@@ -12,25 +12,7 @@ $(document).ready(function(){
         score counter reset
     */
 
-    
-    // function that will check the score each time it is changed by a click event
-    function check(score, computer){
-        if(score < computer){
-        return;
-        }
-        if (score == computer){
-            alert("win!");
-            wins ++;
-            $("#wins").text(wins);
-            roundReset();
-        }
-        if(score > computer) {
-            alert("lose!");
-            losses ++;
-            $("#losses").text(losses);
-            roundReset();
-        }
-    }
+
     //returns random number within range
     function randomRange(max, min) {
         return Math.floor(Math.random()*(max-min +1))+ min;
@@ -44,6 +26,25 @@ $(document).ready(function(){
         crystal3 = randomRange(12,1);
         crystal4 = randomRange(12,1);
         $("#computerNumber, #score").empty();
+        $("#computerNumber").text(compNum);
+    }
+    // function that will check the score each time it is changed by a click event
+    function check(){
+        if(score < compNum){
+        return;
+        }
+        if (score == compNum){
+            alert("win!");
+            wins ++;
+            $("#wins").text(wins);
+            roundReset();
+        }
+        if(score > compNum) {
+            alert("lose!");
+            losses ++;
+            $("#losses").text(losses);
+            roundReset();
+        }
     }
     //click event listener, adds crystal value to score and checks if win or lose
     var crystalButton = function (id, crystal){
@@ -62,16 +63,17 @@ $(document).ready(function(){
     var crystal3;
     var crystal4;
     roundReset();
-    //click event fires off crystalButton function, which 
+    //click event fires off crystalButton function, which
     crystalButton("#crystal1", crystal1);
     crystalButton("#crystal2", crystal2);
     crystalButton("#crystal3", crystal3);
     crystalButton("#crystal4", crystal4);
+    $("#computerNumber").text(compNum);
 
     console.log("global score: " + score);
 
-    
-    
+
+
     console.log("crystal 1: "+ crystal1);
     console.log("crystal 2: "+ crystal2);
     console.log("crystal 3: "+ crystal3);
@@ -79,7 +81,7 @@ $(document).ready(function(){
     console.log("global compNumb: "+ compNum)
     console.log("wins: "+wins);
     console.log("losses: "+losses);
-    
+
 });
 
 //need to get the global score variable from the functions
